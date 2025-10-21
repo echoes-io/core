@@ -1,5 +1,6 @@
 {
   "name": "@echoes/core",
+  "type": "module",
   "version": "0.0.0",
   "description": "Core utilities and types for Echoes - Multi-POV storytelling platform. Provides shared timeline configuration, content parsing, word counting, and validation schemas.",
   "main": "index.js",
@@ -34,5 +35,8 @@
     "lint-staged": "^16.2.5",
     "typescript": "^5.9.3",
     "vitest": "^3.2.4"
+  },
+  "dependencies": {
+    "remove-markdown": "^0.6.2"
   }
 }
