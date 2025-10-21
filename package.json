@@ -1,0 +1,38 @@
+{
+  "name": "@echoes/core",
+  "version": "0.0.0",
+  "description": "Core utilities and types for Echoes - Multi-POV storytelling platform. Provides shared timeline configuration, content parsing, word counting, and validation schemas.",
+  "main": "index.js",
+  "scripts": {
+    "lint": "biome check",
+    "lint:fix": "biome check --write",
+    "test": "vitest run",
+    "prepare": "husky"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/echoes-io/core.git"
+  },
+  "keywords": [
+    "echoes",
+    "storytelling",
+    "multi-pov",
+    "markdown",
+    "content-parser",
+    "timeline"
+  ],
+  "author": "Zweer <n.olivieriachille@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/echoes-io/core/issues"
+  },
+  "homepage": "https://github.com/echoes-io/core#readme",
+  "devDependencies": {
+    "@biomejs/biome": "^2.2.6",
+    "@tsconfig/node22": "^22.0.2",
+    "husky": "^9.1.7",
+    "lint-staged": "^16.2.5",
+    "typescript": "^5.9.3",
+    "vitest": "^3.2.4"
+  }
+}
