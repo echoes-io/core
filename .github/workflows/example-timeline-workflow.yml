@@ -1,0 +1,20 @@
+# Example workflow for timeline repositories
+# Copy this file to .github/workflows/publish.yml in your timeline repo
+
+name: Publish Timeline Content
+
+on:
+  push:
+    branches: [main]
+    paths: ['content/**/*.md']
+  workflow_dispatch:
+
+jobs:
+  publish:
+    uses: echoes-io/utils/.github/workflows/publish-content.yml@main
+    with:
+      timeline-name: 'main'  # Change this for each timeline
+      content-path: 'content/'
+      web-app-url: 'https://your-web-app.com'
+    secrets:
+      WEB_APP_TOKEN: ${{ secrets.WEB_APP_TOKEN }}

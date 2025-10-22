@@ -101,6 +101,138 @@ console.log(stats);
 - Counts words, characters (with/without spaces), paragraphs, sentences
 - Calculates reading time (based on 200 words/minute)
 
+### Path Utilities
+
+Generate chapter files following Echoes naming conventions.
+
+```typescript
+import { generateChapterFile } from '@echoes-io/utils';
+
+const metadata = {
+  pov: 'Alice',
+  title: 'First Meeting',
+  date: '2024-01-01',
+  timeline: 'main',
+  arc: 'Introduction Arc',
+  episode: 1,
+  part: 1,
+  chapter: 5,
+  excerpt: 'Alice meets Bob for the first time',
+  location: 'Coffee Shop',
+  outfit: 'Red dress',
+  kink: 'Slow burn'
+};
+
+const file = generateChapterFile(metadata, 'Alice walked into the coffee shop...');
+
+console.log(file.path);
+// → content/introduction-arc/ep01-first-meeting/ep01-ch005-alice-first-meeting.md
+
+console.log(file.content);
+// → ---
+//   pov: "Alice"
+//   title: "First Meeting"
+//   episode: 1
+//   chapter: 5
+//   ...
+//   ---
+//   
+//   Alice walked into the coffee shop...
+```
+
+**File Structure Convention:**
+```
+content/
+├── <arc-name>/
+│   └── <ep01-episode-title>/
+│       └── <ep01-ch001-pov-title>.md
+```
+
+**Features:**
+- Automatic path generation from metadata
+- Complete file with frontmatter and content
+- Handles special characters in titles (slugification)
+- Proper padding for episode (01) and chapter (001) numbers
+
+## Content Publishing Workflow
+
+This repository provides a reusable GitHub Actions workflow for processing and publishing timeline content.
+
+### Usage in Timeline Repositories
+
+1. **Create workflow file** in your timeline repo at `.github/workflows/publish.yml`:
+
+```yaml
+name: Publish Timeline Content
+
+on:
+  push:
+    branches: [main]
+    paths: ['content/**/*.md']
+  workflow_dispatch:
+
+jobs:
+  publish:
+    uses: echoes-io/utils/.github/workflows/publish-content.yml@main
+    with:
+      timeline-name: 'main'  # Change this for each timeline
+      content-path: 'content/'
+      web-app-url: 'https://your-web-app.com'
+    secrets:
+      WEB_APP_TOKEN: ${{ secrets.WEB_APP_TOKEN }}
+```
+
+2. **Add secret** in your timeline repo:
+   - Go to Settings → Secrets and variables → Actions
+   - Add `WEB_APP_TOKEN` with your web app authentication token
+
+3. **Organize content** in your timeline repo:
+```
+timeline-repo/
+├── content/
+│   ├── arc1/
+│   │   ├── chapter1.md
+│   │   └── chapter2.md
+│   └── arc2/
+│       └── chapter3.md
+└── .github/workflows/publish.yml
+```
+
+### What the Workflow Does
+
+- **Processes** all `.md` files in the specified directory
+- **Extracts** frontmatter metadata using `parseMarkdown()`
+- **Calculates** text statistics using `getTextStats()`
+- **Uploads** processed content to your web app via API
+- **Triggers** automatically on content changes or manually
+
+### API Payload Format
+
+The workflow sends processed content as JSON:
+
+```json
+[
+  {
+    "file": "content/arc1/chapter1.md",
+    "metadata": {
+      "pov": "alice",
+      "title": "First Meeting",
+      "timeline": "main",
+      "arc": "introduction",
+      "episode": 1,
+      "part": 1,
+      "chapter": 1
+    },
+    "content": "# Chapter 1\n\nContent here...",
+    "stats": {
+      "words": 150,
+      "readingTimeMinutes": 1
+    },
+    "lastModified": "2024-01-01T12:00:00.000Z"
+  }
+]
+```
+
 ## Project Structure
 
 ```
@@ -109,11 +241,13 @@ utils/
 │   ├── index.ts      # Public API exports
 │   ├── types.ts      # TypeScript interfaces
 │   ├── markdown-parser.ts  # Markdown parsing & stripping
-│   └── text-stats.ts # Text statistics calculation
+│   ├── text-stats.ts # Text statistics calculation
+│   └── path-utils.ts # Chapter file generation
 ├── test/             # Tests
 │   ├── index.test.ts
 │   ├── markdown-parser.test.ts
-│   └── text-stats.test.ts
+│   ├── text-stats.test.ts
+│   └── path-utils.test.ts
 └── package.json
 ```
 

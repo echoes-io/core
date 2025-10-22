@@ -1,0 +1,135 @@
+name: Publish Content
+
+on:
+  workflow_call:
+    inputs:
+      timeline-name:
+        description: 'Name of the timeline (e.g., main, alternate)'
+        required: true
+        type: string
+      content-path:
+        description: 'Path to markdown files (default: content/)'
+        required: false
+        type: string
+        default: 'content/'
+      web-app-url:
+        description: 'Web app API endpoint'
+        required: true
+        type: string
+    secrets:
+      WEB_APP_TOKEN:
+        description: 'Authentication token for web app'
+        required: true
+
+jobs:
+  process-and-publish:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Install @echoes-io/utils
+        run: npm install @echoes-io/utils
+
+      - name: Process markdown files
+        id: process
+        run: |
+          node -e "
+          const fs = require('fs');
+          const path = require('path');
+          const { parseMarkdown, getTextStats } = require('@echoes-io/utils');
+          
+          const contentPath = '${{ inputs.content-path }}';
+          const timelineName = '${{ inputs.timeline-name }}';
+          
+          function processDirectory(dir) {
+            const results = [];
+            
+            if (!fs.existsSync(dir)) {
+              console.log(\`Directory \${dir} does not exist\`);
+              return results;
+            }
+            
+            const files = fs.readdirSync(dir, { withFileTypes: true });
+            
+            for (const file of files) {
+              const fullPath = path.join(dir, file.name);
+              
+              if (file.isDirectory()) {
+                results.push(...processDirectory(fullPath));
+              } else if (file.name.endsWith('.md')) {
+                try {
+                  console.log(\`Processing: \${fullPath}\`);
+                  const content = fs.readFileSync(fullPath, 'utf8');
+                  
+                  // Skip files without frontmatter
+                  if (!content.startsWith('---')) {
+                    console.log(\`Skipping \${fullPath}: no frontmatter\`);
+                    continue;
+                  }
+                  
+                  const { metadata, content: markdownContent } = parseMarkdown(content);
+                  const stats = getTextStats(content);
+                  
+                  // Ensure timeline is set
+                  metadata.timeline = metadata.timeline || timelineName;
+                  
+                  results.push({
+                    file: fullPath.replace(/\\\\/g, '/'), // Normalize path separators
+                    metadata,
+                    content: markdownContent,
+                    stats,
+                    lastModified: fs.statSync(fullPath).mtime.toISOString()
+                  });
+                } catch (error) {
+                  console.error(\`Error processing \${fullPath}:\`, error.message);
+                  // Continue processing other files
+                }
+              }
+            }
+            
+            return results;
+          }
+          
+          const processedContent = processDirectory(contentPath);
+          fs.writeFileSync('processed-content.json', JSON.stringify(processedContent, null, 2));
+          console.log(\`Successfully processed \${processedContent.length} files\`);
+          
+          // Set output for next step
+          console.log(\`::set-output name=file-count::\${processedContent.length}\`);
+          "
+
+      - name: Upload to web app
+        run: |
+          echo "Uploading processed content to web app..."
+          
+          response=$(curl -s -w "%{http_code}" -X POST "${{ inputs.web-app-url }}/api/content/upload" \
+            -H "Authorization: Bearer ${{ secrets.WEB_APP_TOKEN }}" \
+            -H "Content-Type: application/json" \
+            -d @processed-content.json)
+          
+          http_code="${response: -3}"
+          response_body="${response%???}"
+          
+          echo "HTTP Status: $http_code"
+          echo "Response: $response_body"
+          
+          if [ "$http_code" -ge 200 ] && [ "$http_code" -lt 300 ]; then
+            echo "✅ Successfully uploaded content"
+          else
+            echo "❌ Upload failed with status $http_code"
+            echo "Response body: $response_body"
+            exit 1
+          fi
+
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: processed-content-${{ inputs.timeline-name }}
+          path: processed-content.json
