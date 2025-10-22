@@ -1,3 +1,10 @@
+# [1.1.0](https://github.com/echoes-io/utils/compare/v1.0.0...v1.1.0) (2025-10-22)
+
+
+### Features
+
+* **path-utils:** :sparkles: Added the path utils ([e08b66f](https://github.com/echoes-io/utils/commit/e08b66f0de4a81dfa05a32f1d1227653969e2fe9))
+
 # 1.0.0 (2025-10-22)
 
 
