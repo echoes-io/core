@@ -1,13 +1,6 @@
 import removeMd from 'remove-markdown';
 
-export interface TextStats {
-  words: number;
-  characters: number;
-  charactersNoSpaces: number;
-  paragraphs: number;
-  sentences: number;
-  readingTimeMinutes: number;
-}
+import type { TextStats } from './types.js';
 
 export function getTextStats(markdown: string): TextStats {
   const plainText = removeMd(markdown);

@@ -18,6 +18,49 @@ npm install @echoes-io/utils
 
 ## Features
 
+### Markdown Parser
+
+Parse markdown files with YAML frontmatter to extract chapter metadata and content.
+
+```typescript
+import { parseMarkdown } from '@echoes-io/utils';
+
+const markdown = `---
+pov: "alice"
+title: "First Meeting"
+date: "2024-01-01"
+timeline: "main"
+arc: "introduction"
+episode: 1
+part: 1
+chapter: 1
+excerpt: "Alice meets Bob for the first time"
+location: "coffee shop"
+outfit: "red dress"
+kink: "slow burn"
+---
+
+# Chapter 1
+
+Alice walked into the coffee shop...`;
+
+const { metadata, content } = parseMarkdown(markdown);
+console.log(metadata.pov); // "alice"
+console.log(content); // "# Chapter 1\n\nAlice walked..."
+```
+
+**Metadata Fields:**
+- `pov` - Point of view character
+- `title` - Chapter title
+- `date` - Chapter date
+- `timeline` - Timeline identifier
+- `arc` - Story arc
+- `episode`, `part`, `chapter` - Numeric identifiers
+- `excerpt` - Brief description
+- `location` - Setting location
+- `outfit` - Character outfit (optional)
+- `kink` - Content tags (optional)
+
 ### Text Statistics
 
 Calculate word count and reading statistics from markdown content.

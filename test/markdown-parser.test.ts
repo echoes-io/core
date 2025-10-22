@@ -1,0 +1,78 @@
+import { describe, expect, it } from 'vitest';
+
+import { parseMarkdown } from '../lib/markdown-parser.js';
+
+describe('parseMarkdown', () => {
+  it('parses frontmatter and content', () => {
+    const markdown = `---
+pov: "alice"
+title: "First Meeting"
+date: "2024-01-01"
+timeline: "main"
+arc: "introduction"
+episode: 1
+part: 1
+chapter: 1
+excerpt: "Alice meets Bob for the first time"
+location: "coffee shop"
+outfit: "red dress"
+kink: "slow burn"
+---
+
+# Chapter 1
+
+Alice walked into the coffee shop...`;
+
+    const result = parseMarkdown(markdown);
+
+    expect(result.metadata).toEqual({
+      pov: 'alice',
+      title: 'First Meeting',
+      date: '2024-01-01',
+      timeline: 'main',
+      arc: 'introduction',
+      episode: 1,
+      part: 1,
+      chapter: 1,
+      excerpt: 'Alice meets Bob for the first time',
+      location: 'coffee shop',
+      outfit: 'red dress',
+      kink: 'slow burn',
+    });
+
+    expect(result.content).toBe('# Chapter 1\n\nAlice walked into the coffee shop...');
+  });
+
+  it('handles optional fields', () => {
+    const markdown = `---
+pov: "bob"
+title: "Second Thoughts"
+date: "2024-01-02"
+timeline: "main"
+arc: "introduction"
+episode: 1
+part: 1
+chapter: 2
+excerpt: "Bob reflects on the meeting"
+location: "park"
+---
+
+# Chapter 2
+
+Bob sat on the bench...`;
+
+    const result = parseMarkdown(markdown);
+
+    expect(result.metadata.outfit).toBeUndefined();
+    expect(result.metadata.kink).toBeUndefined();
+    expect(result.metadata.pov).toBe('bob');
+  });
+
+  it('handles missing frontmatter', () => {
+    const markdown = '# Just content\n\nNo frontmatter here.';
+
+    const result = parseMarkdown(markdown);
+    expect(result.content).toBe('# Just content\n\nNo frontmatter here.');
+    expect(result.metadata).toEqual({});
+  });
+});
