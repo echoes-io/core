@@ -125,11 +125,33 @@ utils/
 # Run tests
 npm test
 
+# Run tests with coverage
+npm run test:coverage
+
 # Lint code
 npm run lint
 
 # Fix linting issues
 npm run lint:fix
+
+# Release (automated via GitHub Actions)
+npm run release
+```
+
+### Commit Convention
+
+This project uses [Conventional Commits](https://www.conventionalcommits.org/) for automated versioning:
+
+- `feat:` - New features (minor version bump)
+- `fix:` - Bug fixes (patch version bump)  
+- `feat!:` or `BREAKING CHANGE:` - Breaking changes (major version bump)
+- `docs:`, `style:`, `refactor:`, `test:`, `chore:` - No version bump
+
+Examples:
+```bash
+git commit -m "feat: add stripMarkdown function"
+git commit -m "fix: handle empty frontmatter correctly"
+git commit -m "feat!: change parseMarkdown return type"
 ```
 
 ### Tech Stack
