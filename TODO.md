@@ -6,6 +6,7 @@
 - [x] Frontmatter YAML extraction
 - [x] Metadata parser (POV, title, date, etc.)
 - [x] Content body extraction
+- [x] Markdown syntax removal (`stripMarkdown`)
 - [ ] Path convention utilities
 
 ### Content Utilities

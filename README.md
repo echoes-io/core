@@ -23,7 +23,7 @@ npm install @echoes-io/utils
 Parse markdown files with YAML frontmatter to extract chapter metadata and content.
 
 ```typescript
-import { parseMarkdown } from '@echoes-io/utils';
+import { parseMarkdown, stripMarkdown } from '@echoes-io/utils';
 
 const markdown = `---
 pov: "alice"
@@ -47,7 +47,15 @@ Alice walked into the coffee shop...`;
 const { metadata, content } = parseMarkdown(markdown);
 console.log(metadata.pov); // "alice"
 console.log(content); // "# Chapter 1\n\nAlice walked..."
+
+// Remove markdown syntax
+const plainText = stripMarkdown(content);
+console.log(plainText); // "Chapter 1\n\nAlice walked..."
 ```
+
+**Functions:**
+- `parseMarkdown()` - Extract frontmatter and content from markdown
+- `stripMarkdown()` - Remove markdown syntax from text
 
 **Metadata Fields:**
 - `pov` - Point of view character
@@ -87,7 +95,7 @@ console.log(stats);
 ```
 
 **Features:**
-- Removes markdown syntax (bold, italic, links, code blocks, etc.)
+- Automatically removes markdown syntax using `stripMarkdown()`
 - Removes HTML tags and comments
 - Removes frontmatter YAML
 - Counts words, characters (with/without spaces), paragraphs, sentences
@@ -98,10 +106,14 @@ console.log(stats);
 ```
 utils/
 ├── lib/              # Source code
-│   └── text-stats.ts
+│   ├── index.ts      # Public API exports
+│   ├── types.ts      # TypeScript interfaces
+│   ├── markdown-parser.ts  # Markdown parsing & stripping
+│   └── text-stats.ts # Text statistics calculation
 ├── test/             # Tests
+│   ├── index.test.ts
+│   ├── markdown-parser.test.ts
 │   └── text-stats.test.ts
-├── index.ts          # Public API exports
 └── package.json
 ```
 
@@ -138,6 +150,7 @@ npm run lint:fix
 ## Dependencies
 
 ### Runtime
+- `gray-matter` - Parse YAML frontmatter from markdown
 - `remove-markdown` - Strip markdown syntax for text analysis
 
 ### Development
