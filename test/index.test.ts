@@ -1,6 +1,6 @@
 import { describe, expect, test } from 'vitest';
 
-import { getTextStats, parseMarkdown } from '../index.js';
+import { getTextStats, parseMarkdown } from '../lib/index.js';
 
 describe('index', () => {
   test('exports parseMarkdown function', () => {
