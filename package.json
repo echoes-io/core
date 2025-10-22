@@ -18,7 +18,7 @@
     "release": "semantic-release"
   },
   "exports": {
-    "./": "./lib/index.js"
+    ".": "./lib/index.js"
   },
   "files": [
     "lib/**/*.{d.ts,js}"
