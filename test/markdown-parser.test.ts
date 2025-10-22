@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 
-import { parseMarkdown } from '../lib/markdown-parser.js';
+import { parseMarkdown, stripMarkdown } from '../lib/markdown-parser.js';
 
 describe('parseMarkdown', () => {
   it('parses frontmatter and content', () => {
@@ -74,5 +74,37 @@ Bob sat on the bench...`;
     const result = parseMarkdown(markdown);
     expect(result.content).toBe('# Just content\n\nNo frontmatter here.');
     expect(result.metadata).toEqual({});
+  });
+});
+
+describe('stripMarkdown', () => {
+  it('removes markdown syntax', () => {
+    const markdown =
+      '# Title\n\nThis is **bold** and *italic* text with [a link](https://example.com).';
+    const result = stripMarkdown(markdown);
+
+    expect(result).toBe('Title\n\nThis is bold and italic text with a link.');
+  });
+
+  it('removes bold and italic formatting', () => {
+    const markdown = 'This is **bold** and *italic* text.';
+    const result = stripMarkdown(markdown);
+
+    expect(result).toBe('This is bold and italic text.');
+  });
+
+  it('removes links but keeps link text', () => {
+    const markdown = 'Check [this link](https://example.com) out';
+    const result = stripMarkdown(markdown);
+
+    expect(result).toBe('Check this link out');
+  });
+
+  it('handles code blocks', () => {
+    const markdown = 'Text before\n```\ncode here\n```\nText after';
+    const result = stripMarkdown(markdown);
+
+    expect(result).toContain('Text before');
+    expect(result).toContain('Text after');
   });
 });

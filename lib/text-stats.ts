@@ -1,9 +1,8 @@
-import removeMd from 'remove-markdown';
-
+import { stripMarkdown } from './markdown-parser.js';
 import type { TextStats } from './types.js';
 
 export function getTextStats(markdown: string): TextStats {
-  const plainText = removeMd(markdown);
+  const plainText = stripMarkdown(markdown);
 
   const words = plainText
     .trim()
