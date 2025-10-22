@@ -1,6 +1,6 @@
-# @echoes-io/core
+# @echoes-io/utils
 
-Core utilities and types for **Echoes** - a multi-POV digital storytelling platform.
+Utilities and types for **Echoes** - a multi-POV digital storytelling platform.
 
 ## Overview
 
@@ -13,7 +13,7 @@ This package provides shared utilities used across the Echoes ecosystem:
 ## Installation
 
 ```bash
-npm install @echoes-io/core
+npm install @echoes-io/utils
 ```
 
 ## Features
@@ -23,7 +23,7 @@ npm install @echoes-io/core
 Calculate word count and reading statistics from markdown content.
 
 ```typescript
-import { getTextStats } from '@echoes-io/core';
+import { getTextStats } from '@echoes-io/utils';
 
 const markdown = `
 # Chapter Title
@@ -53,7 +53,7 @@ console.log(stats);
 ## Project Structure
 
 ```
-core/
+utils/
 ├── lib/              # Source code
 │   └── text-stats.ts
 ├── test/             # Tests

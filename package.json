@@ -1,8 +1,8 @@
 {
-  "name": "@echoes/core",
+  "name": "@echoes-io/utils",
   "type": "module",
   "version": "0.0.0",
-  "description": "Core utilities and types for Echoes - Multi-POV storytelling platform. Provides shared timeline configuration, content parsing, word counting, and validation schemas.",
+  "description": "Utilities and types for Echoes - Multi-POV storytelling platform. Provides shared timeline configuration, content parsing, word counting, and validation schemas.",
   "main": "index.js",
   "scripts": {
     "lint": "biome check",
@@ -12,7 +12,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/echoes-io/core.git"
+    "url": "git+https://github.com/echoes-io/utils.git"
   },
   "keywords": [
     "echoes",
@@ -25,9 +25,9 @@
   "author": "Zweer <n.olivieriachille@gmail.com>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/echoes-io/core/issues"
+    "url": "https://github.com/echoes-io/utils/issues"
   },
-  "homepage": "https://github.com/echoes-io/core#readme",
+  "homepage": "https://github.com/echoes-io/utils#readme",
   "devDependencies": {
     "@biomejs/biome": "^2.2.6",
     "@tsconfig/node22": "^22.0.2",
