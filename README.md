@@ -266,7 +266,7 @@ npm run test:coverage
 npm run lint
 
 # Fix linting issues
-npm run lint:fix
+npm run lint:format
 
 # Release (automated via GitHub Actions)
 npm run release
@@ -301,7 +301,7 @@ git commit -m "feat!: change parseMarkdown return type"
 2. Create test in `test/`
 3. Export from `index.ts`
 4. Run tests: `npm test`
-5. Lint: `npm run lint:fix`
+5. Lint: `npm run lint:format`
 
 ## Dependencies
 
