@@ -1,3 +1,10 @@
+# [1.2.0](https://github.com/echoes-io/utils/compare/v1.1.1...v1.2.0) (2025-10-29)
+
+
+### Features
+
+* :sparkles: Moving from `excerpt` to `summary` ([102e157](https://github.com/echoes-io/utils/commit/102e157f7e90381f6e558dd313a449a21b48378b))
+
 ## [1.1.1](https://github.com/echoes-io/utils/compare/v1.1.0...v1.1.1) (2025-10-22)
 
 
