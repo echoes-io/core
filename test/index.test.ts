@@ -27,7 +27,7 @@ describe('index exports', () => {
       episode: 1,
       part: 1,
       chapter: 1,
-      excerpt: 'test',
+      summary: 'test',
       location: 'test',
     };
 

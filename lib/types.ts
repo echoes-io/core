@@ -6,7 +6,7 @@ export interface ChapterMetadata {
   episode: number;
   part: number;
   chapter: number;
-  excerpt: string;
+  summary: string;
   location: string;
   date: string;
   outfit?: string;

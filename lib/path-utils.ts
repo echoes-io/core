@@ -36,7 +36,7 @@ export function generateChapterFile(
     `episode: ${metadata.episode}`,
     `part: ${metadata.part}`,
     `chapter: ${metadata.chapter}`,
-    `excerpt: "${metadata.excerpt}"`,
+    `summary: "${metadata.summary}"`,
     `location: "${metadata.location}"`,
     metadata.outfit ? `outfit: "${metadata.outfit}"` : null,
     metadata.kink ? `kink: "${metadata.kink}"` : null,

@@ -13,7 +13,7 @@ arc: "introduction"
 episode: 1
 part: 1
 chapter: 1
-excerpt: "Alice meets Bob for the first time"
+summary: "Alice meets Bob for the first time"
 location: "coffee shop"
 outfit: "red dress"
 kink: "slow burn"
@@ -34,7 +34,7 @@ Alice walked into the coffee shop...`;
       episode: 1,
       part: 1,
       chapter: 1,
-      excerpt: 'Alice meets Bob for the first time',
+      summary: 'Alice meets Bob for the first time',
       location: 'coffee shop',
       outfit: 'red dress',
       kink: 'slow burn',
@@ -53,7 +53,7 @@ arc: "introduction"
 episode: 1
 part: 1
 chapter: 2
-excerpt: "Bob reflects on the meeting"
+summary: "Bob reflects on the meeting"
 location: "park"
 ---
 

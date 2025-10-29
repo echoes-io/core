@@ -14,7 +14,7 @@ describe('generateChapterFile', () => {
       episode: 1,
       part: 1,
       chapter: 5,
-      excerpt: 'Alice meets Bob for the first time',
+      summary: 'Alice meets Bob for the first time',
       location: 'Coffee Shop',
       outfit: 'Red dress',
       kink: 'Slow burn',
@@ -46,7 +46,7 @@ describe('generateChapterFile', () => {
       episode: 2,
       part: 1,
       chapter: 1,
-      excerpt: 'Bob reflects',
+      summary: 'Bob reflects',
       location: 'Park',
     };
 
@@ -70,7 +70,7 @@ describe('generateChapterFile', () => {
       episode: 12,
       part: 2,
       chapter: 123,
-      excerpt: 'The dramatic end',
+      summary: 'The dramatic end',
       location: 'Nowhere',
     };
 
