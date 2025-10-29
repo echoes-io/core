@@ -34,7 +34,7 @@ arc: "introduction"
 episode: 1
 part: 1
 chapter: 1
-excerpt: "Alice meets Bob for the first time"
+summary: "Alice meets Bob for the first time"
 location: "coffee shop"
 outfit: "red dress"
 kink: "slow burn"
@@ -64,7 +64,7 @@ console.log(plainText); // "Chapter 1\n\nAlice walked..."
 - `timeline` - Timeline identifier
 - `arc` - Story arc
 - `episode`, `part`, `chapter` - Numeric identifiers
-- `excerpt` - Brief description
+- `summary` - Brief description
 - `location` - Setting location
 - `outfit` - Character outfit (optional)
 - `kink` - Content tags (optional)
@@ -117,7 +117,7 @@ const metadata = {
   episode: 1,
   part: 1,
   chapter: 5,
-  excerpt: 'Alice meets Bob for the first time',
+  summary: 'Alice meets Bob for the first time',
   location: 'Coffee Shop',
   outfit: 'Red dress',
   kink: 'Slow burn'
